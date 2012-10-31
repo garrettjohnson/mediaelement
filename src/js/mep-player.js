@@ -548,34 +548,29 @@
 						
 					
 						// show/hide controls
-						t.container
+						if (!t.options.alwaysShowControls) {
+							t.container
 							.bind('mouseenter mouseover', function () {
-								if (t.controlsEnabled) {
-									if (!t.options.alwaysShowControls) {								
+								if (t.controlsEnabled) {							
 										t.killControlsTimer('enter');
 										t.showControls();
 										t.startControlsTimer(2500);		
-									}
 								}
 							})
 							.bind('mousemove', function() {
 								if (t.controlsEnabled) {
 									if (!t.controlsAreVisible) {
 										t.showControls();
-									}
-									//t.killControlsTimer('move');
-									if (!t.options.alwaysShowControls) {
 										t.startControlsTimer(2500);
 									}
 								}
 							})
 							.bind('mouseleave', function () {
-								if (t.controlsEnabled) {
-									if (!t.media.paused && !t.options.alwaysShowControls) {
-										t.startControlsTimer(1000);								
-									}
+								if (t.controlsEnabled && t.media.paused) {
+									t.startControlsTimer(1000);								
 								}
 							});
+						}
 					}
 					
 					// check for autoplay
