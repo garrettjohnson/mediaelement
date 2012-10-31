@@ -70,11 +70,23 @@
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	width: 100px;
-	height: 100px;
-	margin: -50px 0 0 -50px;
-	background: url(bigplay.png) no-repeat;
+	width: 170px;
+	height: 95px;
+	margin: -45px 0 0 -85px;
+	border:1px solid #3f3f3f !important;
+	border-radius:5px;
+	background: rgba(11,11,12,0.7);
 }
+
+.mejs-overlay-button:hover{
+	background: white;
+}
+
+.mejs-overlay-audio-play-button {
+	margin: 61px 0 0 -85px;
+	height:40px;
+}
+
 .mejs-overlay:hover .mejs-overlay-button{
 	background-position: 0 -100px ;
 }
@@ -113,15 +125,7 @@
 	padding: 0;
 	bottom: 0;
 	left: 0;
-	background: url(background.png);
-	background: rgba(0, 0, 0, 0.7);
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(50,50,50,0.7)), to(rgba(0,0,0,0.7)));
-	background: -webkit-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7)); 
-	background: -moz-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7));
-	background: -o-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7)); 
-	background: -ms-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7)); 	
-	background: linear-gradient(rgba(50,50,50,0.7), rgba(0,0,0,0.7)); 	
-	height: 30px;
+	height: 60px;
 	width: 100%;
 }
 .mejs-container .mejs-controls  div {
@@ -130,7 +134,7 @@
 	display: block;
 	float: left;
 	margin: 0;
-	padding: 0;
+	padding: 11px 25px 12px 25px;
 	width: 26px;
 	height: 26px;
 	font-size: 11px;
@@ -138,6 +142,12 @@
 	background: 0;
 	font-family: Helvetica, Arial;
 	border: 0;
+}
+
+.mejs-container .mejs-controls .mejs-button{
+	border:1px solid #3f3f3f !important;
+	border-radius:5px;
+	background: rgba(11,11,12,0.7);
 }
 
 .mejs-controls .mejs-button button {
@@ -149,7 +159,8 @@
 	margin: 7px 5px;
 	padding: 0;
 	position: absolute;
-	height: 16px;
+	
+	height:16px;
 	width: 16px;
 	border: 0;
 	background: transparent url(controls.png) no-repeat;
@@ -167,21 +178,24 @@
 	color: #fff;
 	display: block;
 	height: 17px;
-	width: 150px;
-	padding: 8px 3px 0 3px ;
+	width: 155px;
+	padding: 0;
 	overflow: hidden;
-	text-align: center;
+	text-align: right;
 	padding: auto 4px;
 	box-sizing: content-box;
 	-moz-box-sizing: content-box;
 	-webkit-box-sizing: content-box;
+	margin-left: -160px;
+	margin-top: 19px;
+	position: relative;
+	z-index: 1000;
+	cursor:pointer;
 }
 .mejs-container .mejs-controls .mejs-time span {
-	font-size: 11px;
+	font-size: 12px;
 	color: #fff;
 	line-height: 12px;
-	display: block;
-	float: left;
 	margin: 1px 2px 0 0;
 	width: auto;
 }
@@ -207,41 +221,35 @@
 /* Start: Progress bar */
 .mejs-controls div.mejs-time-rail {
 	width: 200px;
-	padding-top: 5px;
+	padding: 0;
 }
 .mejs-controls .mejs-time-rail span {
 	display: block;
 	position: absolute;
 	width: 180px;
-	height: 10px;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
+	height: 48px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 	cursor: pointer;
 }
 .mejs-controls .mejs-time-rail .mejs-time-total {
-	margin: 5px;
+	margin: 0;
+	border:1px solid #3f3f3f;
 	background: #333;
-	background: rgba(50,50,50,0.8);
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(30,30,30,0.8)), to(rgba(60,60,60,0.8)));
-	background: -webkit-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8)); 
-	background: -moz-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
-	background: -o-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
-	background: -ms-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
-	background: linear-gradient(rgba(30,30,30,0.8), rgba(60,60,60,0.8));
+	background: rgba(11,11,12,0.7);
 }
 .mejs-controls .mejs-time-rail .mejs-time-buffering {
 	width:100%;
-	background-image: -o-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 	background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-	background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-	background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-	background-image: -ms-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-	background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-	-webkit-background-size: 15px 15px;
-	-moz-background-size: 15px 15px;
-	-o-background-size: 15px 15px;
-	background-size: 15px 15px;
+	background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+	background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+	background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+	background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+	-webkit-background-size: 40px 40px;
+	-moz-background-size: 40px 40px;
+	-o-background-size: 40px 40px;
+	background-size: 40px 40px;
 	-webkit-animation: buffering-stripes 2s linear infinite;
 	-moz-animation: buffering-stripes 2s linear infinite;
 	-ms-animation: buffering-stripes 2s linear infinite;
@@ -249,69 +257,68 @@
 	animation: buffering-stripes 2s linear infinite;
 }
 
-@-webkit-keyframes buffering-stripes { from {background-position: 0 0;} to {background-position: 30px 0;} }
-@-moz-keyframes buffering-stripes { from {background-position: 0 0;} to {background-position: 30px 0;} }
-@-ms-keyframes buffering-stripes { from {background-position: 0 0;} to {background-position: 30px 0;} }
-@-o-keyframes buffering-stripes { from {background-position: 0 0;} to {background-position: 30px 0;} }
-@keyframes buffering-stripes { from {background-position: 0 0;} to {background-position: 30px 0;} }
+@-webkit-keyframes buffering-stripes { from {background-position: 0 0;} to {background-position: 40px 0;} }
+@-moz-keyframes buffering-stripes { from {background-position: 0 0;} to {background-position: 40px 0;} }
+@-ms-keyframes buffering-stripes { from {background-position: 0 0;} to {background-position: 40px 0;} }
+@-o-keyframes buffering-stripes { from {background-position: 0 0;} to {background-position: 40px 0;} }
+@keyframes buffering-stripes { from {background-position: 0 0;} to {background-position: 40px 0;} }
 
 .mejs-controls .mejs-time-rail .mejs-time-loaded {
-	background: #3caac8;
-	background: rgba(60,170,200,0.8);
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(44,124,145,0.8)), to(rgba(78,183,212,0.8))); 
-	background: -webkit-linear-gradient(top, rgba(44,124,145,0.8), rgba(78,183,212,0.8));
-	background: -moz-linear-gradient(top, rgba(44,124,145,0.8), rgba(78,183,212,0.8));
-	background: -o-linear-gradient(top, rgba(44,124,145,0.8), rgba(78,183,212,0.8));
-	background: -ms-linear-gradient(top, rgba(44,124,145,0.8), rgba(78,183,212,0.8));
-	background: linear-gradient(rgba(44,124,145,0.8), rgba(78,183,212,0.8));
+	background:rgba(0,0,0,0.2);
 	width: 0;
 }
 .mejs-controls .mejs-time-rail .mejs-time-current {
 	width: 0;
-	background: #fff;
-	background: rgba(255,255,255,0.8);
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,0.9)), to(rgba(200,200,200,0.8)));
-	background: -webkit-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
-	background: -moz-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8)); 
-	background: -o-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
-	background: -ms-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
-	background: linear-gradient(rgba(255,255,255,0.9), rgba(200,200,200,0.8));
+background: rgb(235,189,6); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(235,189,6,1) 0%, rgba(113,90,0,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(235,189,6,1)), color-stop(100%,rgba(113,90,0,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgba(235,189,6,1) 0%,rgba(113,90,0,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgba(235,189,6,1) 0%,rgba(113,90,0,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgba(235,189,6,1) 0%,rgba(113,90,0,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom, rgba(235,189,6,1) 0%,rgba(113,90,0,1) 100%); /* W3C */
+border-radius:5px 0 0 5px;
+margin:0;
+padding:0;
 }
 
 .mejs-controls .mejs-time-rail .mejs-time-handle {
 	display: none;
 	position: absolute;
 	margin: 0;
-	width: 10px;
+	width: 1px;
 	background: #fff;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
 	cursor: pointer;
-	border: solid 2px #333;
-	top: -2px;
+	border: 0;
+	top: 0;
 	text-align: center;
+	z-index: 100;
 }
 
 .mejs-controls .mejs-time-rail .mejs-time-float {
 	position: absolute;
 	display: none;
 	background: #eee;
-	width: 36px;
-	height: 17px;
+	width: 52px;
+	height: 28px;
 	border: solid 1px #333;
-	top: -26px;
-	margin-left: -18px;
+	border-radius: 5px;
+	top: -36px;
+	margin-left: -26px;
 	text-align: center;
 	color: #111;
 }
 
 .mejs-controls .mejs-time-rail .mejs-time-float-current {
-	margin: 2px;
-	width: 30px;
+	margin: 8px 5px;
+	width: 42px;
 	display: block;
 	text-align: center;
 	left: 0;
+	font-size:17px;
+	font-weight: bold;
 }
 .mejs-controls .mejs-time-rail .mejs-time-float-corner {
 	position: absolute;
@@ -324,8 +331,8 @@
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
-	top: 15px;
-	left: 13px;
+	top: 28px;
+	left: 21px;
 
 }
 
@@ -366,25 +373,27 @@
 }
 
 .mejs-controls .mejs-volume-button .mejs-volume-slider {
-	display: none;
-	height: 115px;
-	width: 25px;
+	display: block !important;
+	height: 29px;
+	width: 20px;
 	background: url(background.png);
+	padding:0;
 	background: rgba(50, 50, 50, 0.7);
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
-	top: -115px;
+	top: 0;
 	left: 0;
 	z-index: 1;
-	position: absolute;
+	/*position: absolute;*/
 	margin: 0;
 }
-.mejs-controls .mejs-volume-button:hover {
-	-webkit-border-radius: 0 0 4px 4px;
-	-moz-border-radius: 0 0 4px 4px;
-	border-radius: 0 0 4px 4px;
+
+.mejs-controls .mejs-volume-button .mejs-volume-slider div {
+	padding:0;
 }
+
+
 /*
 .mejs-controls .mejs-volume-button:hover .mejs-volume-slider {
 	display: block;
@@ -393,39 +402,28 @@
 
 .mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-total {
 	position: absolute;
-	left: 11px;
+	left: 9px;
 	top: 8px;
-	width: 2px;
-	height: 100px;
-	background: #ddd;
-	background: rgba(255, 255, 255, 0.5);
+	width: 19px;
+	height: 29px;
+	background: #8b8b8b;
+	background: url(mh-inactive-vol.png);
 	margin: 0;
 }
 
 .mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-current {
 	position: absolute;
-	left: 11px;
+	left: 9px;
 	top: 8px;
-	width: 2px;
-	height: 100px;
-	background: #ddd;
-	background: rgba(255, 255, 255, 0.9);
+	width: 19px;
+	height: 29px;
+	background:#ffcc00;
+	background: url(mh-active-vol.png) bottom center;
 	margin: 0;
 }
 
 .mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-handle {
-	position: absolute;
-	left: 4px;
-	top: -3px;
-	width: 16px;
-	height: 6px;
-	background: #ddd;
-	background: rgba(255, 255, 255, 0.9);
-	cursor: N-resize;
-	-webkit-border-radius: 1px;
-	-moz-border-radius: 1px;
-	border-radius: 1px;
-	margin: 0;
+	display:none;
 }
 
 
@@ -505,21 +503,50 @@
 .mejs-controls .mejs-captions-button button {
 	background-position:-48px 0;
 }
+
+.mejs-controls .mejs-captions-button {
+	-webkit-transition:all .2s ease-in-out;
+}
+
+.mejs-controls .mejs-captions-button:hover{
+height:53px;
+top:-27px; 
+-webkit-transition:all .2s ease-in-out;
+}
+
+.mejs-controls .mejs-captions-button ul{
+opacity: 0;
+-webkit-transition:all .2s ease-in-out;
+}
+
+.mejs-controls .mejs-captions-button:hover ul{
+opacity: 1;
+-webkit-transition:all .2s ease-in-out;
+}
+
+.mejs-controls .mejs-captions-button ul li:hover label{
+ color:gray;
+}
+
+.mejs-controls .mejs-captions-button button {
+	bottom:15px;
+	-webkit-transition:all .2s ease-in-out;
+}
+
+.mejs-controls .mejs-captions-button:hover button {
+	bottom:8px;
+	-webkit-transition:all .2s ease-in-out;
+}
+
 .mejs-controls .mejs-captions-button .mejs-captions-selector {
 	visibility: hidden;
-	position: absolute;
-	bottom: 26px;
-	right: -10px;
-	width: 130px;
-	height: 100px;
-	background: url(background.png);
-	background: rgba(50,50,50,0.7);
-	border: solid 1px transparent;
-	padding: 10px;
+	position: relative;
+	top:0;
 	overflow: hidden;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	border-radius: 0;
+	padding:0;
+	margin:0;
+	margin-top:-13px;
+	width:100%;
 }
 /*
 .mejs-controls .mejs-captions-button:hover  .mejs-captions-selector {
@@ -543,17 +570,25 @@
 	overflow: hidden;
 }
 .mejs-controls .mejs-captions-button .mejs-captions-selector ul li input{
-	clear: both;
-	float: left;
-	margin: 3px 3px 0 5px;
+	display:none;
+}
+
+#mep_0_captions_none + label{display:none;}
+
+.mejs-controls .mejs-captions-button .mejs-captions-selector ul li input[type="radio"]:checked + label{
+color:#FC0;
 }
 .mejs-controls .mejs-captions-button .mejs-captions-selector ul li label{
-	width: 100px;
+	text-transform: uppercase;
+	width: 100%;
 	float: left;
-	padding: 4px 0 0 0;
+	padding: 0 0 2px 0;
 	line-height: 15px;
 	font-family: helvetica, arial;
 	font-size: 10px;
+	font-weight: bold;
+	text-align:center;
+	cursor: pointer;
 }
 
 .mejs-controls .mejs-captions-button .mejs-captions-translations {
@@ -656,13 +691,14 @@
 }
 
 .mejs-captions-position-hover {
-	bottom: 45px;
+	bottom: 65px;
 }
 
 .mejs-captions-text {
 	padding: 3px 5px;
 	background: url(background.png);
 	background: rgba(20, 20, 20, 0.8);
+	font-size:22px;
 
 }
 /* End: TRACK (Captions and Chapters) */
@@ -716,12 +752,12 @@
 /* context menu */
 .mejs-contextmenu {
 	position: absolute;
-	width: 150px;
+	width: 110px;
 	padding: 10px;
 	border-radius: 4px;
 	top: 0;
 	left: 0;
-	background: #fff;
+	background: rgba(0,0,0,0.7);
 	border: solid 1px #999;
 	z-index: 1001; /* make sure it shows on fullscreen */
 }
@@ -737,11 +773,11 @@
 	font-size: 12px;
 	padding: 4px 6px;
 	cursor: pointer;
-	color: #333;	
+	color: #fff;	
 }
 .mejs-contextmenu .mejs-contextmenu-item:hover {
-	background: #2C7C91;
-	color: #fff;
+	background: #fff;
+	color: #000;
 }
 
 
@@ -799,3 +835,82 @@
 	font-size: 10px;
 }
 /* End: SourceChooser */
+
+
+
+.mejs-container .mejs-controls .mejs-playpause-button{
+	margin-left: 10px;
+	margin-right:8px;
+}
+
+.mejs-container .mejs-controls .mejs-volume-button{
+	margin-left: 8px;
+	margin-right: 8px;
+	padding-right:9px;
+	padding-left: 9px;
+	width:19px;
+	padding-bottom: 11px;
+}
+
+.mejs-container .mejs-controls .mejs-fullscreen-button{
+	padding:11px 11px 11px 11px;
+}
+
+.mejs-controls .mejs-volume-button button{
+display:none;
+}
+
+.mejs-controls .mejs-fullscreen-button button {
+	width:26px;
+	height: 26px;
+	margin:0;
+	background-image: url(mhfullscreen);
+background-position: 0 0;
+}
+
+.mejs-container .mejs-controls  .mejs-playpause-button {
+padding: 9px 25px 13px 25px;
+}
+
+.mejs-controls .mejs-play button {
+	width:25px;
+	height: 30px;
+	margin:0;
+	background-image: url(mhplay.png);
+background-position: 0 0;
+}
+
+.mejs-controls .mejs-pause button {
+	width:25px;
+	height: 30px;
+	margin:0;
+	background-image: url(mhpause.png);
+background-position: 0 0;
+}
+
+.mejs-controls .mejs-fullscreen-button:hover button {
+	width:34px;
+	height: 34px;
+	margin:0;
+	margin-left:-4px;
+	margin-top:-4px;
+	background-image: url(mhfullscreen-hover.png);
+background-position: 0 0;
+}
+
+.mejs-container .mejs-controls .mejs-captions-button{
+	margin-left: 8px;
+	margin-right: 0;
+	padding:11px 4px;
+	width:30px;
+}
+
+.mejs-controls .mejs-captions-button button {
+	width:30px;
+	height: 22px;
+	margin:0;
+	background-image: url(mh-cc.png);
+background-position: 0 0;
+}
+
+

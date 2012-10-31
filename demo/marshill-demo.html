@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>HTML5 MediaElement</title>	
+	
+	<script src="../build/jquery.js"></script>	
+	<script src="../build/mediaelement-and-player.js"></script>
+	<!-- <script src="../src/js/mep-feature-bigplay.js"></script> -->
+	<link rel="stylesheet" href="../build/marshill.css" />
+        
+</head>
+<body>
+
+<h1>MediaElementPlayer.js</h1>
+
+<p>Skins Demo. Just add a class on the &lt;video class="mejs-myskin" &gt; and then follow the examples in the mejs-skins.css file</p>
+
+<h2>Default Skin</h2>
+
+<video width="731" height="408" src="http://cdn.marshill.com/files/2012/02/26/20120226_disgrace-and-grace_vodcast.m4v" type="video/mp4" 
+	id="player1" poster="http://cdn.marshill.com/files/2012/02/26/20120226_disgrace-and-grace_poster_img.jpg" 
+	 preload="none" data-name="Mars Hill Church">
+
+
+	<track kind="subtitles" src="../media/ENdisgrace-and-grace.srt" srclang="en" />
+	<track kind="subtitles" src="../media/ESdisgrace-and-grace.srt" srclang="es" />
+</video>
+
+
+<script>
+$('audio,video').mediaelementplayer({
+	success: function(player, node) {
+		$('#' + node.id + '-mode').html('mode: ' + player.pluginType);
+	}
+});
+
+</script>
+
+
+</body>
+</html>

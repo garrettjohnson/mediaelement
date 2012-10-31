@@ -32,6 +32,9 @@ mejs.plugins = {
 	youtube: [
 		{version: null, types: ['video/youtube', 'video/x-youtube']}
 	],
+	marshill: [
+		{version: null, types: ['video/marshill']}
+	],
 	vimeo: [
 		{version: null, types: ['video/vimeo']}
 	]
@@ -1619,7 +1622,7 @@ if (typeof jQuery != 'undefined') {
 		// force Android's native controls
 		AndroidUseNativeControls: false,			
 		// features to show
-		features: ['playpause','current','progress','duration','tracks','volume','fullscreen'],
+		features: ['contextmenu','playpause','progress','current','duration','tracks','volume','fullscreen','endedhtml','infooverlay'],
 		// only for dynamic
 		isVideo: true,
 		
@@ -1950,7 +1953,7 @@ if (typeof jQuery != 'undefined') {
 				t.controls.stop(true, true).fadeOut(200, function() {
 					$(this)
 						.css('visibility','hidden')
-						.css('display','block');
+						.css('display','none');
 						
 					t.controlsAreVisible = false;
 				});	
@@ -2110,16 +2113,15 @@ if (typeof jQuery != 'undefined') {
 							}
 						});
 						
-					
+						// Optimizations Always Show
+						if (!t.options.alwaysShowControls) {
 						// show/hide controls
-						t.container
+							t.container
 							.bind('mouseenter mouseover', function () {
 								if (t.controlsEnabled) {
-									if (!t.options.alwaysShowControls) {								
 										t.killControlsTimer('enter');
 										t.showControls();
 										t.startControlsTimer(2500);		
-									}
 								}
 							})
 							.bind('mousemove', function() {
@@ -2127,19 +2129,15 @@ if (typeof jQuery != 'undefined') {
 									if (!t.controlsAreVisible) {
 										t.showControls();
 									}
-									//t.killControlsTimer('move');
-									if (!t.options.alwaysShowControls) {
-										t.startControlsTimer(2500);
-									}
+									t.startControlsTimer(2500);
 								}
 							})
 							.bind('mouseleave', function () {
-								if (t.controlsEnabled) {
-									if (!t.media.paused && !t.options.alwaysShowControls) {
-										t.startControlsTimer(1000);								
-									}
+								if (t.controlsEnabled && !t.media.paused) {
+									t.startControlsTimer(1000);								
 								}
 							});
+						}
 					}
 					
 					// check for autoplay
@@ -2364,7 +2362,7 @@ if (typeof jQuery != 'undefined') {
 				});
 				
 				// fit the rail into the remaining space
-				railWidth = t.controls.width() - usedWidth - (rail.outerWidth(true) - rail.width());
+				railWidth = t.controls.width() - 15 - usedWidth - (rail.outerWidth(true) - rail.width());
 			}
 
 			// outer area
@@ -2445,7 +2443,9 @@ if (typeof jQuery != 'undefined') {
 					} else {
 						media.pause();
 					}
-				});
+				}),
+			bufferingBar =
+				controls.find('.mejs-time-buffering');
 			
 			/*
 			if (mejs.MediaFeatures.isiOS || mejs.MediaFeatures.isAndroid) {
@@ -2459,25 +2459,25 @@ if (typeof jQuery != 'undefined') {
 			media.addEventListener('play',function() {
 				bigPlay.hide();
 				loading.hide();
-				controls.find('.mejs-time-buffering').hide();
+				bufferingBar.hide();
 				error.hide();
 			}, false);	
 			
 			media.addEventListener('playing', function() {
 				bigPlay.hide();
 				loading.hide();
-				controls.find('.mejs-time-buffering').hide();
+				bufferingBar.hide();
 				error.hide();			
 			}, false);
 
 			media.addEventListener('seeking', function() {
 				loading.show();
-				controls.find('.mejs-time-buffering').show();
+				bufferingBar.show();
 			}, false);
 
 			media.addEventListener('seeked', function() {
 				loading.hide();
-				controls.find('.mejs-time-buffering').hide();
+				bufferingBar.hide();
 			}, false);
 	
 			media.addEventListener('pause',function() {
@@ -2488,7 +2488,7 @@ if (typeof jQuery != 'undefined') {
 			
 			media.addEventListener('waiting', function() {
 				loading.show();	
-				controls.find('.mejs-time-buffering').show();
+				bufferingBar.show();
 			}, false);			
 			
 			
@@ -2499,17 +2499,17 @@ if (typeof jQuery != 'undefined') {
 				//	return;
 					
 				loading.show();
-				controls.find('.mejs-time-buffering').show();
+				bufferingBar.show();
 			}, false);	
 			media.addEventListener('canplay',function() {
 				loading.hide();
-				controls.find('.mejs-time-buffering').hide();
+				bufferingBar.hide();
 			}, false);	
 
 			// error handling
 			media.addEventListener('error',function() {
 				loading.hide();
-				controls.find('.mejs-time-buffering').hide();
+				bufferingBar.hide();
 				error.show();
 				error.find('mejs-overlay-error').html("Error loading this resource");
 			}, false);				
@@ -2745,6 +2745,7 @@ if (typeof jQuery != 'undefined') {
 				handle  = controls.find('.mejs-time-handle'),
 				timefloat  = controls.find('.mejs-time-float'),
 				timefloatcurrent  = controls.find('.mejs-time-float-current'),
+				bufferingbar = controls.find('.mejs-time-buffering'),
 				handleMouseMove = function (e) {
 					// mouse position relative to the object
 					var x = e.pageX,
@@ -2767,8 +2768,10 @@ if (typeof jQuery != 'undefined') {
 						// position floating time box
 						if (!mejs.MediaFeatures.hasTouch) {
 								timefloat.css('left', pos);
+								handle.css('left', pos)
 								timefloatcurrent.html( mejs.Utility.secondsToTimeCode(newTime) );
-								timefloat.show();
+								timefloat.fadeIn(100);
+								timefloat.fadeIn(100);
 						}
 					}
 				},
@@ -2789,7 +2792,8 @@ if (typeof jQuery != 'undefined') {
 							})
 							.bind('mouseup.dur', function (e) {
 								mouseIsDown = false;
-								timefloat.hide();
+								timefloat.fadeOut(250);
+								handle.fadeOut(250);
 								$(document).unbind('.dur');
 							});
 						return false;
@@ -2808,7 +2812,8 @@ if (typeof jQuery != 'undefined') {
 					mouseIsOver = false;
 					if (!mouseIsDown) {
 						$(document).unbind('.dur');
-						timefloat.hide();
+						timefloat.fadeOut(200);
+						handle.hide();
 					}
 				});
 
@@ -2877,7 +2882,7 @@ if (typeof jQuery != 'undefined') {
 						handlePos = newWidth - (t.handle.outerWidth(true) / 2);
 
 					t.current.width(newWidth);
-					t.handle.css('left', handlePos);
+					// t.handle.css('left', handlePos);
 				}
 			}
 
@@ -3678,13 +3683,18 @@ if (typeof jQuery != 'undefined') {
 						
 						// handle clicks to the language radio buttons
 						.delegate('input[type=radio]','click',function() {
+							console.log("click!")
 							lang = this.value;
+							if (lang == "en") {
+								console.log("magic")
+							}
 
 							if (lang == 'none') {
 								player.selectedTrack = null;
 							} else {
 								for (i=0; i<player.tracks.length; i++) {
 									if (player.tracks[i].srclang == lang) {
+
 										player.selectedTrack = player.tracks[i];
 										player.captions.attr('lang', player.selectedTrack.srclang);
 										player.displayCaptions();
@@ -3703,7 +3713,6 @@ if (typeof jQuery != 'undefined') {
 					.bind('mouseenter', function () {
 						// push captions above controls
 						player.container.find('.mejs-captions-position').addClass('mejs-captions-position-hover');
-
 					})
 					.bind('mouseleave', function () {
 						if (!media.paused) {
@@ -3791,19 +3800,8 @@ if (typeof jQuery != 'undefined') {
 
 				};
 
-			if (track.isTranslation) {
-
-				// translate the first track
-				mejs.TrackFormatParser.translateTrackText(t.tracks[0].entries, t.tracks[0].srclang, track.srclang, t.options.googleApiKey, function(newOne) {
-
-					// store the new translation
-					track.entries = newOne;
-
-					after();
-				});
-
-			} else {
 				$.ajax({
+					type: "GET",
 					url: track.src,
 					success: function(d) {
 
@@ -3819,21 +3817,21 @@ if (typeof jQuery != 'undefined') {
 						t.loadNextTrack();
 					}
 				});
-			}
 		},
 
 		enableTrackButton: function(lang, label) {
 			var t = this;
 			
 			if (label === '') {
-				label = mejs.language.codes[lang] || lang;
+				//label = mejs.language.codes[lang] || lang;
+				label = lang;
 			}			
 
 			t.captionsButton
 				.find('input[value=' + lang + ']')
 					.prop('disabled',false)
 				.siblings('label')
-					.html( label );
+					.removeClass( 'mejs-captions-loading' );
 
 			// auto select
 			if (t.options.startLanguage == lang) {
@@ -3852,7 +3850,7 @@ if (typeof jQuery != 'undefined') {
 			t.captionsButton.find('ul').append(
 				$('<li>'+
 					'<input type="radio" name="' + t.id + '_captions" id="' + t.id + '_captions_' + lang + '" value="' + lang + '" disabled="disabled" />' +
-					'<label for="' + t.id + '_captions_' + lang + '">' + label + ' (loading)' + '</label>'+
+					'<label for="' + t.id + '_captions_' + lang + '" class="mejs-captions-loading">' + lang + '</label>'+
 				'</li>')
 			);
 
@@ -4187,22 +4185,25 @@ $.extend(mejs.MepDefaults,
 								.hide();
 			
 			// create events for showing context menu
-			player.container.bind('contextmenu', function(e) {
-				if (player.isContextMenuEnabled) {
-					e.preventDefault();
-					player.renderContextMenu(e.clientX-1, e.clientY-1);
-					return false;
-				}
-			});
-			player.container.bind('click', function() {
-				player.contextMenu.hide();
-			});	
-			player.contextMenu.bind('mouseleave', function() {
+			if (player.isContextMenuEnabled) {
+				player.container.bind('contextmenu', function(e) {
+						e.preventDefault();
+						player.renderContextMenu(e.originalEvent.pageX + 4, e.originalEvent.pageY + 5);
 
-				//console.log('context hover out');
-				player.startContextMenuTimer();
-				
-			});		
+						$(document).bind('click', function() {
+							console.log("click lame");
+							player.hideContextMenu();
+							$(document).unbind('click');
+						});	
+
+						player.contextMenu.bind('mouseleave', function() {
+							console.log('context hover out');
+							player.startContextMenuTimer();
+							player.contextMenu.unbind('mouseleave');
+						});	
+						return false;
+				});
+			}
 		},
 		
 		isContextMenuEnabled: true,
@@ -4240,6 +4241,7 @@ $.extend(mejs.MepDefaults,
 		
 		hideContextMenu: function() {
 			this.contextMenu.hide();
+			this.contextmenuIsVisible = false;
 		},
 		
 		renderContextMenu: function(x,y) {
@@ -4271,6 +4273,8 @@ $.extend(mejs.MepDefaults,
 				.css({top:y, left:x})
 				.show();
 				
+			t.contextmenuIsVisible = true;
+			console.log("is visible " + t.contextmenuIsVisible);	
 			// bind events
 			t.contextMenu.find('.mejs-contextmenu-item').each(function() {
 							
@@ -4291,7 +4295,7 @@ $.extend(mejs.MepDefaults,
 					
 					// close
 					t.contextMenu.hide();				
-				});				
+				});	
 			});	
 			
 			// stop the controls from hiding
@@ -4299,6 +4303,69 @@ $.extend(mejs.MepDefaults,
 				t.killControlsTimer('rev3');	
 			}, 100);
 						
+		}
+	});
+	
+})(mejs.$);
+
+
+//START THE MAGIC
+
+(function($) {
+
+	$.extend(MediaElementPlayer.prototype, {
+		buildendedhtml: function(player, controls, layers, media) {
+			console.log('ended html')
+			if (!player.isVideo)
+				return;
+
+			audiobigPlay = 
+			$('<div class="mejs-overlay-button mejs-overlay-audio-play-button"><span>Audio Only</span></div>')
+			.appendTo('.mejs-overlay-play');
+			controls.hide(); // keep controls from jumping in before play
+			
+			audiobigPlay.click(function() {
+				player.setSrc("http://download.marshill.com/files/2012/10/28/20121028_jesus-is-a-better-servant_sd_audio.mp3")
+				player.play();
+			});
+			
+			media.addEventListener('play',function() {
+				controls.show(); // let the controls back
+				$('.mejs-overlay-audio-play-button').hide()
+			}, false);	
+
+		}
+	});
+	
+})(mejs.$);
+
+
+//START THE MAGIC
+
+(function($) {
+
+	$.extend(MediaElementPlayer.prototype, {
+		buildinfooverlay: function(player, controls, layers, media) {
+			console.log('overlay')
+			if (!player.isVideo && player.$media.data("name"))
+				return;
+
+			titleInfo = 
+			$('<div class="mejs-overlay mejs-layer mejs-titleinfo">' + 
+				'<div class="mejs-titleinfo-holder"><span>You&#146;re watching</span><span class="mejs-title">' 
+				+ player.$media.data("name") 
+				+ '</span></div>' 
+				+ '</div>')
+			.hide().appendTo(layers); 
+
+            media.addEventListener('pause', function() {
+                if (!mejs.MediaFeatures.isiPhone) {
+                    if (player.$media.data("name") && (media.duration - 1 > media.currentTime && media.currentTime > 0)) {
+                        titleInfo.delay(1500).fadeIn(800);
+                    }
+                }
+            }, false);         
+
 		}
 	});
 	
